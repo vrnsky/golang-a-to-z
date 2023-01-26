@@ -14,6 +14,8 @@ func main() {
 	if secondErr != nil {
 		fmt.Println(secondErr)
 	}
+	var a number = 5
+	fmt.Println(a.square())
 }
 
 // Service - it is definition of structure or class in terms of Java/**
@@ -25,4 +27,10 @@ type Service struct {
 func (svc *Service) Start() error {
 	fmt.Println("Connecting to", svc.host)
 	return nil
+}
+
+type number int
+
+func (n number) square() number {
+	return n * n
 }
