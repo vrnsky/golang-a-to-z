@@ -2,7 +2,8 @@
 There is my journey of studying GoLang
 
 ### [Chapter 1](./chapter1)
-The chapter covers introduce a few Go(Lang) concepts
+The chapter covers introduce a few Go(Lang) concepts like definitions of methods, interfaces and variables
+Also this chapter include description of goroutines
 
 
 ### Contact
