@@ -16,10 +16,12 @@ func main() {
 	}
 }
 
+// Service - it is definition of structure or class in terms of Java/**
 type Service struct {
 	host string
 }
 
+// Start Start() it is method of Service structure -/**
 func (svc *Service) Start() error {
 	fmt.Println("Connecting to", svc.host)
 	return nil
