@@ -57,14 +57,19 @@ type resource struct {
 	data []byte
 }
 
+/**
+Functions again
+*/
 func (r *resource) deny() {
 	fmt.Println("Access to", r.path, "is restricted")
 }
 
+// Example of decomposition
 type car struct {
 	engine engine
 }
 
+// Example of decomposition
 type engine struct {
 	volume float64
 }
