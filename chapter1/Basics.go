@@ -21,4 +21,19 @@ func main() {
 	terms := "Terms"
 	fmt.Println(terms)
 
+	const language string = "Go"
+
+	var a [3]int
+	fmt.Println(a)
+
+	a[0] = 2
+	fmt.Println(a)
+
+	b := [3]int{1, 2, 3}
+	fmt.Println(b[1])
+
+	fmt.Println(len(b))
+
+	mySlice := make([]int, 3)
+	println(cap(mySlice))
 }
