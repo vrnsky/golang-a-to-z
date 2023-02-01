@@ -21,6 +21,9 @@ func main() {
 	terms := "Terms"
 	fmt.Println(terms)
 
+	/** Go really doesn't care about constants
+	  So you can a lot of unused constant :)
+	*/
 	const language string = "Go"
 
 	var a [3]int
@@ -36,4 +39,17 @@ func main() {
 
 	mySlice := make([]int, 3)
 	println(cap(mySlice))
+	fmt.Println(language)
+
+	var c int = 10
+	var p = &c
+	fmt.Println(c)
+	fmt.Println(p)
+
+	sum, i := 0, 0
+	for i < 10 {
+		i++
+		sum += i
+	}
+	fmt.Println(sum)
 }
