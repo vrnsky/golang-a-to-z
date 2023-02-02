@@ -41,7 +41,7 @@ func main() {
 	println(cap(mySlice))
 	fmt.Println(language)
 
-	var c int = 10
+	var c = 10
 	var p = &c
 	fmt.Println(c)
 	fmt.Println(p)
