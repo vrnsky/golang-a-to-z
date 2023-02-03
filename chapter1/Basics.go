@@ -52,4 +52,22 @@ func main() {
 		sum += i
 	}
 	fmt.Println(sum)
+
+	m := map[int]string{
+		1: "January",
+		2: "February",
+		3: "March",
+		4: "April",
+	}
+
+	for k, v := range m {
+		fmt.Println(k, "->", v)
+	}
+
+	h, k := callMeLater("1", "2")
+	fmt.Println(h, " ", k)
+}
+
+func callMeLater(phone, email string) (string, string) {
+	return phone, "event"
 }
