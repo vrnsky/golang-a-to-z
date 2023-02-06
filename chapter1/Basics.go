@@ -66,8 +66,16 @@ func main() {
 
 	h, k := callMeLater("1", "2")
 	fmt.Println(h, " ", k)
+
+	deferExample()
 }
 
 func callMeLater(phone, email string) (string, string) {
 	return phone, "event"
+}
+
+func deferExample() {
+	defer fmt.Println("Hi! I am defer")
+
+	fmt.Println("goodbye")
 }
