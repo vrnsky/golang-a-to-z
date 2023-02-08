@@ -9,12 +9,12 @@ func ExampleMain() {
 }
 
 func TestGreet(t *testing.T) {
-	type testCase struct {
+	type scenario struct {
 		lang             language
 		expectedGreeting string
 	}
 
-	var tests = map[string]testCase{
+	var tests = map[string]scenario{
 		"English": {
 			lang:             "en",
 			expectedGreeting: "Hello world",
@@ -42,6 +42,10 @@ func TestGreet(t *testing.T) {
 		"Vietnamese": {
 			lang:             "vi",
 			expectedGreeting: "Xin chào Thế Giới",
+		},
+		"Russian": {
+			lang:             "ru",
+			expectedGreeting: "Привет мир",
 		},
 		"Empty": {
 			lang:             "",
