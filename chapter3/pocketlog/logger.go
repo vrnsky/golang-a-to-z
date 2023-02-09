@@ -3,6 +3,7 @@ package pocketlog
 import (
 	"fmt"
 	"io"
+	"os"
 )
 
 // Logger is used to log information.
@@ -25,8 +26,13 @@ func (l *Logger) Debugf(format string, args ...any) {
 	if l.threshold > LevelDebug {
 		return
 	}
+	if l.output == nil {
+		l.output = os.Stdout
+	}
 
-	_, _ = fmt.Printf(format+"\n", args...)
+	if l.threshold <= LevelDebug {
+		_, _ = fmt.Fprintf(l.output, format, args...)
+	}
 }
 
 // Infof formats and prints a message if the log level is info or higher.
@@ -45,4 +51,10 @@ func (l *Logger) Errorf(format string, args ...any) {
 	}
 
 	_, _ = fmt.Printf(format+"\n", args)
+}
+
+// logf print the message to the output.
+// Add decorations here, if any.
+func (l *Logger) logf(format string, args ...any) {
+	_, _ = fmt.Fprintf(l.output, format+"\n", args...)
 }
