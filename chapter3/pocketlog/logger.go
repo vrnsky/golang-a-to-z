@@ -1,16 +1,22 @@
 package pocketlog
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+)
 
 // Logger is used to log information.
 type Logger struct {
 	threshold Level
+	output    io.Writer
 }
 
 // New return you a logger, ready to log at the required threshold.
-func New(threshold Level) *Logger {
+// The default output is Stdout.
+func New(threshold Level, output io.Writer) *Logger {
 	return &Logger{
 		threshold: threshold,
+		output:    output,
 	}
 }
 
