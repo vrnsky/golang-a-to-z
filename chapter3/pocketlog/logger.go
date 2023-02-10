@@ -59,8 +59,16 @@ func (l *Logger) Errorf(format string, args ...any) {
 	_, _ = fmt.Printf(format+"\n", args)
 }
 
+func (l *Logger) Logf(lvl Level, format string, args ...any) {
+	if l.threshold > lvl {
+		return
+	}
+
+	l.logf(lvl, format, args)
+}
+
 // logf print the message to the output.
 // Add decorations here, if any.
-func (l *Logger) logf(format string, args ...any) {
-	_, _ = fmt.Fprintf(l.output, format+"\n", args...)
+func (l *Logger) logf(level Level, format string, args ...any) {
+	_, _ = fmt.Fprintf(l.output, string(level)+":"+format+"\n", args...)
 }
