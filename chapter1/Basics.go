@@ -71,7 +71,7 @@ func main() {
 }
 
 func callMeLater(phone, email string) (string, string) {
-	return phone, "event"
+	return email + phone, "event"
 }
 
 func deferExample() {
