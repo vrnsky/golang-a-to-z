@@ -2,6 +2,7 @@
 There is my journey of studying GoLang
 
 [cli-tool](./cli-tool)
+Simple CLI tool
 
 ### Contact
 [LinkedIn](https://www.linkedin.com/in/vrnsky/)  
