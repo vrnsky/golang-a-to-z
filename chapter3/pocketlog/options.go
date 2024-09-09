@@ -7,6 +7,6 @@ type Option func(l *Logger)
 
 func WithOutput(output io.Writer) Option {
 	return func(lgr *Logger) {
-		lgr.writer = output
+		lgr.output = output
 	}
 }
