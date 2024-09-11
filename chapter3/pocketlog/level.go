@@ -8,4 +8,18 @@ const (
 	// LevelError represents the highest logging level, only to be used to trace errors.
 	LevelError
 )
+
 type Level byte
+
+func (l Level) String() string {
+	switch l {
+	case LevelDebug:
+		return "[DEBUG]"
+	case LevelInfo:
+		return "[INFO]"
+	case LevelError:
+		return "[ERROR]"
+	default:
+		return ""
+	}
+}
