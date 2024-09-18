@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"slices"
+	"strings"
 )
 
 const solutionLength = 5
@@ -12,7 +14,9 @@ const solutionLength = 5
 var errInvalidLengthMessage = fmt.Errorf("invalid guess, word doesn't have the same number of characters as the solution")
 
 type Game struct {
-	reader *bufio.Reader
+	reader      *bufio.Reader
+	solution    []rune
+	maxAttempts int
 }
 
 func (g *Game) validateGuess(guess []rune) error {
@@ -20,6 +24,11 @@ func (g *Game) validateGuess(guess []rune) error {
 		return fmt.Errorf("expected %d, got %d, %w", solutionLength, len(guess), errInvalidLengthMessage)
 	}
 	return nil
+}
+
+// splitToUppercaseCharacter is naive implementation to turn a string into a list of characters.
+func splitToUppercaseCharacter(input string) []rune {
+	return []rune(strings.ToUpper(input))
 }
 
 func (g *Game) ask() []rune {
@@ -43,13 +52,22 @@ func (g *Game) ask() []rune {
 
 func (g *Game) Play() {
 	fmt.Println("Welcome to Gordle!")
-	guess := g.ask()
-	fmt.Printf("Your guess is: %s\n", string(guess))
+	for currentAttempt := 1; currentAttempt <= g.maxAttempts; currentAttempt++ {
+		guess := g.ask()
+
+		if slices.Equal(guess, g.solution) {
+			fmt.Printf("🔥You won! You found it in %d guess(es)! The word was: %s.\n", currentAttempt, string(g.solution))
+			return
+		}
+		fmt.Printf("🗿You've lost! The solution was: %s.\n", string(g.solution))
+	}
 }
 
-func New(playerInput io.Reader) *Game {
+func New(playerInput io.Reader, solution string, maxAttempts int) *Game {
 	game := &Game{
-		reader: bufio.NewReader(playerInput),
+		reader:      bufio.NewReader(playerInput),
+		solution:    splitToUppercaseCharacter(solution),
+		maxAttempts: maxAttempts,
 	}
 	return game
 }
