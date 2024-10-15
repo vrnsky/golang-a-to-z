@@ -69,7 +69,7 @@ func computeFeedback(guess, solution []rune) feedback {
 	used := make([]bool, len(solution))
 
 	if len(guess) != len(solution) {
-		_, _ = fmt.Fprint(os.Stderr, "Internal error! Guess and solution have different lengths: %d vs %d", len(guess), len(solution))
+		_, _ = fmt.Fprintf(os.Stderr, "Internal error! Guess and solution have different lengths: %d vs %d", len(guess), len(solution))
 		return result
 	}
 
