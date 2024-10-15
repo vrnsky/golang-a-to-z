@@ -55,12 +55,49 @@ func (g *Game) Play() {
 	for currentAttempt := 1; currentAttempt <= g.maxAttempts; currentAttempt++ {
 		guess := g.ask()
 
-		if slices.Equal(guess, g.solution) {
+		if slices.Equal([]rune(splitToUppercaseCharacter(string(guess))), g.solution) {
 			fmt.Printf("🔥You won! You found it in %d guess(es)! The word was: %s.\n", currentAttempt, string(g.solution))
 			return
 		}
 		fmt.Printf("🗿You've lost! The solution was: %s.\n", string(g.solution))
 	}
+}
+
+// computeFeedback verifies every character of the guess agains the solution.
+func computeFeedback(guess, solution []rune) feedback {
+	result := make(feedback, len(guess))
+	used := make([]bool, len(solution))
+
+	if len(guess) != len(solution) {
+		_, _ = fmt.Fprint(os.Stderr, "Internal error! Guess and solution have different lengths: %d vs %d", len(guess), len(solution))
+		return result
+	}
+
+	for posInGuess, character := range guess {
+		if character == solution[posInGuess] {
+			result[posInGuess] = correctPosition
+			used[posInGuess] = true
+		}
+	}
+
+	for posInGuess, character := range guess {
+		if result[posInGuess] != absentCharacter {
+			continue
+		}
+
+		for posInSolution, target := range solution {
+			if used[posInSolution] {
+				continue
+			}
+			if character == target {
+				result[posInGuess] = wrongPosition
+				used[posInSolution] = true
+				break
+			}
+		}
+	}
+
+	return result
 }
 
 func New(playerInput io.Reader, solution string, maxAttempts int) *Game {
