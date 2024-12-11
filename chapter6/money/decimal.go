@@ -29,8 +29,24 @@ func ParseDecimal(value string) (Decimal, error) {
 	}
 
 	precision := byte(len(fracPart))
+	dec := Decimal{
+		subunits:  subunits,
+		precision: precision,
+	}
+	dec.simplify()
+	return dec, nil
+}
+
+func (d *Decimal) simplify() {
+	for d.subunits%10 == 0 && d.precision > 0 {
+		d.precision--
+		d.subunits /= 10
+	}
+}
+
+func NewDecimal(subunits int64, precision byte) Decimal {
 	return Decimal{
 		subunits:  subunits,
 		precision: precision,
-	}, nil
+	}
 }

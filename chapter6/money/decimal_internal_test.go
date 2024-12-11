@@ -24,6 +24,11 @@ func TestParseDecimal(t *testing.T) {
 			expected: Decimal{1, 0},
 			err:      nil,
 		},
+		"suffix 0 as decimal digits": {
+			decimal:  "1.50",
+			expected: Decimal{15, 1},
+			err:      nil,
+		},
 		"prefix 0 as decimal digits": {
 			decimal:  "1.02",
 			expected: Decimal{102, 2},
