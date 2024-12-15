@@ -33,3 +33,8 @@ func NewCurrency(code string, precision byte) Currency {
 		precision: precision,
 	}
 }
+
+// String implements Stringer.
+func (c Currency) String() string {
+	return c.code
+}

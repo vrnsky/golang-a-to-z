@@ -5,6 +5,7 @@ const (
 	ErrInvalidDecimal = Error("unable to convert the decimal")
 	// ErrTooLarge is returned if the quantity is too large - this would cause floating point precision errors.
 	ErrTooLarge = Error("quantity over 10^12 is too large")
+	ErrNegative = Error("Cannot be negative count")
 )
 
 // Error defines an error.
