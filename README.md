@@ -1,7 +1,7 @@
 [![Go CI](https://github.com/vrnsky/golang-a-to-z/actions/workflows/test.yml/badge.svg)](https://github.com/vrnsky/golang-a-to-z/actions/workflows/test.yml)
-[![Go](https://img.shields.io/badge/Go-1.22-%2300ADD8.svg?&logo=go&logoColor=white)](#)
-[![Linear](https://img.shields.io/badge/Task_tracker_we_prefer-Linear-5E6AD2?logo=linear&logoColor=fff)](#)
-[![Zed](https://img.shields.io/badge/Developed_with-Zed-white?logo=zedindustries&logoColor=084CCF)](#)
+[![Go](https://img.shields.io/badge/Go-1.22-%2300ADD8.svg?&logo=go&logoColor=white)](https://go.dev/doc/devel/release#go1.22.0)
+[![Linear](https://img.shields.io/badge/Task_tracker_we_prefer-Linear-5E6AD2?logo=linear&logoColor=fff)](https://linear.app/vrnsky)
+[![Zed](https://img.shields.io/badge/Developed_with-Zed-white?logo=zedindustries&logoColor=084CCF)](https://zed.dev)
 
 # golang-a-to-z
 This project is for educational use only. No production-ready code exists in this repository.
