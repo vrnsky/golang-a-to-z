@@ -1,6 +1,7 @@
 package money
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 )
@@ -11,6 +12,7 @@ func TestApplyExchangeRate(t *testing.T) {
 		rate           ExchangeRate
 		targetCurrency Currency
 		expected       Amount
+		err            error
 	}{
 		"Amount(1.52) * rate(1)": {
 			in: Amount{
@@ -163,9 +165,50 @@ func TestApplyExchangeRate(t *testing.T) {
 
 	for name, tc := range tt {
 		t.Run(name, func(t *testing.T) {
-			got := applyExchangeRate(tc.in, tc.targetCurrency, tc.rate)
+			got, err := applyExchangeRate(tc.in, tc.targetCurrency, tc.rate)
+			if !errors.Is(err, tc.err) {
+				t.Errorf("expected error %v, got %v", tc.err, err)
+			}
 			if !reflect.DeepEqual(got, tc.expected) {
 				t.Errorf("expected %v, got %v", tc.expected, got)
+			}
+		})
+	}
+}
+
+func TestMultiply(t *testing.T) {
+	tt := map[string]struct {
+		decimal Decimal
+		rate    ExchangeRate
+		want    Decimal
+	}{
+		"10.0 * 1.2 = 12": {
+			decimal: Decimal{100, 1},
+			rate:    ExchangeRate{subunits: 12, precision: 1},
+			want:    Decimal{12, 0},
+		},
+		"10 * 2 = 20": {
+			decimal: Decimal{10, 0},
+			rate:    ExchangeRate{subunits: 2, precision: 0},
+			want:    Decimal{20, 0},
+		},
+		"10 * 1e15": {
+			decimal: Decimal{10, 0},
+			rate:    ExchangeRate{subunits: 1_000_000_000_000_000, precision: 0},
+			want:    Decimal{subunits: 10_000_000_000_000_000, precision: 0},
+		},
+		"1698.188 * 2.198677818 = 3733.768286393784": {
+			decimal: Decimal{1698188, 3},
+			rate:    ExchangeRate{subunits: 2198677818, precision: 9},
+			want:    Decimal{3733768286393784, 12},
+		},
+	}
+
+	for name, tc := range tt {
+		t.Run(name, func(t *testing.T) {
+			got := multiply(tc.decimal, tc.rate)
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("expected %v, got %v", tc.want, got)
 			}
 		})
 	}

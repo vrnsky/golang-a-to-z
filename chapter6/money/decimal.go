@@ -50,6 +50,23 @@ func ParseDecimal(value string) (Decimal, error) {
 	return dec, nil
 }
 
+// String implements stringer and returns the Decimal formatted as
+// digits and optionally a decimal point followed by digits.
+func (d *Decimal) String() string {
+	// Quick-win, no need to do maths.
+	if d.precision == 0 {
+		return fmt.Sprintf("%d", d.subunits)
+	}
+
+	centsPerUnit := pow10(d.precision)
+	frac := d.subunits % centsPerUnit
+	integer := d.subunits / centsPerUnit
+
+	// We always want to print the correct number of digits - even if they finish with 0.
+	decimalFormat := "%d.%0" + strconv.Itoa(int(d.precision)) + "d"
+	return fmt.Sprintf(decimalFormat, integer, frac)
+}
+
 // pow10 is a quick implementation of how to raise 10 to a given power.
 // It's optimised for small powers, and slow for unusually high powers.
 func pow10(power byte) int64 {
