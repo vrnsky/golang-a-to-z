@@ -1,8 +1,14 @@
 package api
 
 const (
+	// GameId is the name of the field that stores the game's identifier.
+	GameId = "id"
+
 	// NewGameRoute is the path to create a new game.
 	NewGameRoute = "/games"
+
+	// GetStatusRoute is the path to get the status of game identified by its id.
+	GetStatusRoute = "/games/{" + GameId + "}"
 )
 
 // GameResponse contains the information about a game.
@@ -10,7 +16,7 @@ type GameResponse struct {
 	ID           string  `json:"id"`
 	AttemptsLeft byte    `json:"attempts_left"`
 	Guesses      []Guess `json:"guesses"`
-	WordLength   byte    `json:"word_length`
+	WordLength   byte    `json:"word_length"`
 	Solution     string  `json:"solution,omitempty"`
 	Status       string  `json:"status"`
 }
