@@ -7,13 +7,22 @@ import (
 	"net/http"
 )
 
-func Handle(w http.ResponseWriter, req *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+func Handle(writer http.ResponseWriter, request *http.Request) {
+	id := request.PathValue(api.GameId)
 
-	apiGame := api.GameResponse{}
-	err := json.NewEncoder(w).Encode(apiGame)
-	if err != nil {
-		log.Printf("Failed to write response: %s", err)
+	if id == "" {
+		http.Error(writer, "missing id of the game", http.StatusBadRequest)
+		return
 	}
+	log.Printf("retrieve status of game with id: %v", id)
+
+	apiGame := api.GameResponse{
+		ID: id,
+	}
+	err := json.NewEncoder(writer).Encode(apiGame)
+	if err != nil {
+		http.Error(writer, "failed to serialize value", http.StatusInternalServerError)
+		return
+	}
+
 }

@@ -3,6 +3,7 @@ package handlers
 import (
 	"golang-a-to-z/chapter8/internal/api"
 	"golang-a-to-z/chapter8/internal/handlers/getstatus"
+	"golang-a-to-z/chapter8/internal/handlers/guess"
 	"golang-a-to-z/chapter8/internal/handlers/newgame"
 	"net/http"
 )
@@ -21,5 +22,6 @@ func NewRouter() *http.ServeMux {
 	r := http.NewServeMux()
 	r.HandleFunc(http.MethodPost+" "+api.NewGameRoute, newgame.Handle)
 	r.HandleFunc(http.MethodGet+" "+api.GetStatusRoute, getstatus.Handle)
+	r.HandleFunc(http.MethodPut+" "+api.GuessRoute, guess.Handle)
 	return r
 }
