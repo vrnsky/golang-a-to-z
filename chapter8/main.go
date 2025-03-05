@@ -1,17 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"golang-a-to-z/chapter8/internal/handlers"
+	"golang-a-to-z/chapter8/internal/repository"
+	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
-	err := http.ListenAndServe(":8080", handlers.NewRouter())
+	db := repository.New()
 
+	addr := ":9090"
+
+	log.Print("Listening on ", addr, "...")
+
+	err := http.ListenAndServe(addr, handlers.NewRouter(db))
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+		panic(err)
 	}
 }

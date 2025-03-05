@@ -5,23 +5,17 @@ import (
 	"golang-a-to-z/chapter8/internal/handlers/getstatus"
 	"golang-a-to-z/chapter8/internal/handlers/guess"
 	"golang-a-to-z/chapter8/internal/handlers/newgame"
+	"golang-a-to-z/chapter8/internal/repository"
 	"net/http"
 )
 
-func Mux() *http.ServeMux {
-	mux := http.NewServeMux()
-	mux.HandleFunc(api.NewGameRoute, newgame.Handle)
-	return mux
-}
-
-// NewRouter return a router that listesn for requests to the following endpoints:
-// - Create a new game
-//
-// The provided router is ready to serve.
-func NewRouter() *http.ServeMux {
+func NewRouter(db *repository.GameRepository) *http.ServeMux {
 	r := http.NewServeMux()
-	r.HandleFunc(http.MethodPost+" "+api.NewGameRoute, newgame.Handle)
-	r.HandleFunc(http.MethodGet+" "+api.GetStatusRoute, getstatus.Handle)
-	r.HandleFunc(http.MethodPut+" "+api.GuessRoute, guess.Handle)
+
+	// Register each endpoint.
+	r.HandleFunc(http.MethodPost+" "+api.NewGameRoute, newgame.Handler(db))    // curl -X POST -v http://localhost:9090/games
+	r.HandleFunc(http.MethodGet+" "+api.GetStatusRoute, getstatus.Handler(db)) // curl -X GET -v http://localhost:9090/games/1682279480
+	r.HandleFunc(http.MethodPut+" "+api.GuessRoute, guess.Handler(db))         // curl -X PUT -v http://localhost:9090/games/1682279480 -d '{"guess":"faune"}'
+
 	return r
 }
